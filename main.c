@@ -1,16 +1,20 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 
 int main (void) {
   int ch;
+  srand ((unsigned) time (NULL));
 
-  printf("Hello world!\n");
   while ((ch = getchar()) != EOF) {
-    if (ch >= 'a' && ch <= 'z') {
-      ch += ('A' - 'a');
+     // Randomize case of letters
+      if (ch >= 'a' && ch <= 'z') {
+        ch = rand() % 2 ? ch : ch - 32;
+      } else if (ch >= 'A' && ch <= 'Z') {
+        ch = rand() % 2 ? ch : ch + 32;
+      }
       putchar(ch);
-      continue;
-    }
-    putchar(ch);
   }
 
   return 0;
