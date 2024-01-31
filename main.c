@@ -4,17 +4,20 @@
 #include <ctype.h>
 
 
-int main (void) {
+// Cesar cipher v1.0
+int main(void) {
   int ch;
-  srand ((unsigned) time (NULL));
+  srand((unsigned) time(NULL));
 
   while ((ch = getchar()) != EOF) {
-     // Randomize case of letters
-      if (rand() % 2) {
-        putchar(toupper(ch));
+    if (isalpha(ch)) {
+      if (toupper(ch) >= 'A' && toupper(ch) <= 'M') {
+        ch += 13;
       } else {
-        putchar(tolower(ch));
+        ch -= 13;
       }
+    }
+    putchar(ch);
   }
   putchar('\n');
 
