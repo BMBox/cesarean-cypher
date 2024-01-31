@@ -77,6 +77,12 @@ bin/*
 !default.xcworkspace
 xcuserdata
 
+# MacOS
+.DS_Store
+
 # Cmake Folder
 cmake-*
+
+# Makefile build folder
+/build/
 

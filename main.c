@@ -1,5 +1,12 @@
 #include <stdio.h>
 
 int main (void) {
-  printf("Hello world");
+  int ch;
+
+  printf("Hello world!\n");
+  while ((ch = getchar()) != EOF) {
+    putchar(ch);
+  }
+
+  return 0;
 }
