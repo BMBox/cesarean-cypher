@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 
 int main (void) {
@@ -9,13 +10,13 @@ int main (void) {
 
   while ((ch = getchar()) != EOF) {
      // Randomize case of letters
-      if (ch >= 'a' && ch <= 'z') {
-        ch = rand() % 2 ? ch : ch - 32;
-      } else if (ch >= 'A' && ch <= 'Z') {
-        ch = rand() % 2 ? ch : ch + 32;
+      if (rand() % 2) {
+        putchar(toupper(ch));
+      } else {
+        putchar(tolower(ch));
       }
-      putchar(ch);
   }
+  putchar('\n');
 
   return 0;
 }
