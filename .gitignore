@@ -86,3 +86,6 @@ cmake-*
 # Makefile build folder
 /build/
 
+# Ignore generated and input txt files
+*.txt
+

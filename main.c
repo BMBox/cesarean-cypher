@@ -3,8 +3,6 @@
 #include <time.h>
 #include <ctype.h>
 
-
-// Cesar cipher v1.0
 int main(void) {
   int ch;
   srand((unsigned) time(NULL));
