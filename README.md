@@ -1,9 +1,9 @@
 
-# Cesarean Cipher (Rot13 Variation)
+# Cesarean Cipher
 [![License](https://img.shields.io/badge/License-GPL%20v3.0-blue.svg)](LICENSE)
 
 ## Overview
-This project implements a simple variation of the Caesar Cipher, specifically the Rot13 algorithm. The Rot13 cipher is a substitution cipher with a specific shift of 13 places, meaning that it replaces each letter with the letter 13 letters after it in the alphabet. This cipher has the unique property of being its own inverse - applying Rot13 twice returns the original text. The implementation is designed to process input text from standard input (stdin) and output the encrypted or decrypted text to standard output (stdout).
+This project implements a simple variation of the Caesar Cipher. It can be used to encode and decode text using a specified offset. 
 
 ## Prerequisites
 - A C compiler such as Clang or GCC
@@ -18,13 +18,21 @@ The project includes a Makefile for easy compilation and running. The main comma
 - **`make clean`**: Cleans up all build artifacts, removing the `/build` directory.
 
 ## Usage
-To use the program, you first need to compile it using the Makefile provided. Once compiled, you can run the program which will then wait for input from stdin. You can type your text into the console or redirect input from a file. After inputting your text, you can signal the end of file (EOF) by typing `Ctrl+D` (on Linux/macOS) or `Ctrl+Z` followed by `Enter` on Windows.
-
-### Example:
-```bash
-make all # Compiles and runs the program
-# Now type your text, followed by Ctrl+D (or Ctrl+Z on Windows) to process it.
+To use the program, you first need to compile it using the Makefile provided. Once compiled, you can run it with the following command:
 ```
+./cesarean-cypher <-rot| offset{a-z|A-Z}> [modifier{-d}]
+```
+Here, **offset** is the letter to shift by, and **modifier** is an optional argument that can be **`-d`** to decode the text.  If you use **`-rot`** as the first argument, the program will use a default shift of 13 (ROT13).
+### Example:
+To encode a message with a shift of 3, you can run:
+```bash
+echo "Hello, World!" | ./cesarean-cypher c
+```
+To decode the message, you can run:
+```bash
+echo "Khoor, Zruog!" | ./cesarean-cypher c -d
+```
+This will output the original message: **"Hello, World!"**.
 
 ## Implementation Details
 - The program is written in C and makes use of the `ctype.h` library to check and convert character case.
