@@ -1,119 +1,62 @@
 #include <ctype.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #define NUMBER_OF_LETTERS_IN_THE_ALPHABET 26
 
-int rot13(void);
+void print_usage(char *program_name);
 
-int aToDShift(void);
+void shift_text(int shift, int direction);
 
-int decryptAToD(void);
+void shift_text_with_offset(char offset, int modifier);
 
-int cypher(int offset, int modifier);
+void rot13(void);
 
 int main(int argc, char **argv) {
-  if (argc > 2) {
-    int modifier = strcmp(argv[2], "-d") == 0;
-    if (isalpha(*argv[1]) && modifier == 1) {
-      cypher(*argv[1], modifier);
-    } else {
-      printf("Usage: %s <-rot|-decr| offset{a-z|A-Z}> <modifier{-d}>", argv[0]);
-    }
-  } else if (argc > 1) {
-    if (strcmp(argv[1], "-rot") == 0) {
-      rot13();
-    } else if (strcmp(argv[1], "-decr") == 0) {
-      decryptAToD();
-    } else if (isalpha(*argv[1])) {
-      cypher((*argv[1]), 0);
-    } else {
-      printf("Usage: %s <-rot|-decr|{a-z|A-Z}", argv[0]);
-    }
+  if (argc < 2) {
+    print_usage(argv[0]);
+    return 1;
+  }
 
+  if (strcmp(argv[1], "-rot") == 0) {
+    rot13();
+  } else if (isalpha(*argv[1])) {
+    int modifier = argc > 2 && strcmp(argv[2], "-d") == 0;
+    shift_text_with_offset(*argv[1], modifier);
   } else {
-    aToDShift();
+    print_usage(argv[0]);
+    return 1;
   }
-  return 0;
-}
-
-int aToDShift(void) {
-  int shift, ch;
-
-  shift = 'D' - 'A';
-
-  while ((ch = getchar()) != EOF) {
-    if (isalpha(ch)) {
-      ch += shift;
-      if ((ch > 'Z' && ch < 'a') || (ch > 'z')) {
-        ch -= NUMBER_OF_LETTERS_IN_THE_ALPHABET;
-      }
-    }
-    putchar(ch);
-  }
-  putchar('\n');
-  return 0;
-}
-
-int decryptAToD(void) {
-  int shift, ch;
-
-  shift = 'A' - 'D';
-
-  while ((ch = getchar()) != EOF) {
-    if (isalpha(ch)) {
-      ch += shift;
-      if ('A' > ch || ('Z' < ch && ch < 'a')) {
-        ch += NUMBER_OF_LETTERS_IN_THE_ALPHABET;
-      }
-    }
-    putchar(ch);
-  }
-  putchar('\n');
 
   return 0;
 }
 
+void print_usage(char *program_name) {
+  printf("Usage: %s <-rot| offset{a-z|A-Z}> [modifier{-d}]\n", program_name);
+}
 
-int cypher(int offset, int modifier) {
+void shift_text(int shift, int direction) {
   int ch;
+
+  int trim_out_of_bounds = NUMBER_OF_LETTERS_IN_THE_ALPHABET * direction;
+  while ((ch = getchar()) != EOF) {
+    if (isalpha(ch)) {
+      ch += shift;
+      if ((ch <= 'A') || (ch > 'Z' && ch < 'a') || ch > 'z') {
+        ch += trim_out_of_bounds;
+      }
+    }
+    putchar(ch);
+  }
+  putchar('\n');
+}
+
+void shift_text_with_offset(char offset, int modifier) {
   int shift = modifier == 1 ? 'A' - toupper(offset) : toupper(offset) - 'A';
-
-  while ((ch = getchar()) != EOF) {
-    if (isupper(ch)) {
-      ch += shift;
-      if (ch > 'Z') ch -= NUMBER_OF_LETTERS_IN_THE_ALPHABET;
-      if (ch < 'A') ch += NUMBER_OF_LETTERS_IN_THE_ALPHABET;
-      putchar(ch);
-    } else if (islower(ch)) {
-      ch += shift;
-      if (ch > 'z') ch -= NUMBER_OF_LETTERS_IN_THE_ALPHABET;
-      if (ch < 'a') ch += NUMBER_OF_LETTERS_IN_THE_ALPHABET;
-      putchar(ch);
-    } else {
-      putchar(ch);
-    }
-  }
-  putchar('\n');
-
-  return 0;
+  int direction = modifier == 1 ? 1 : -1;
+  shift_text(shift, direction);
 }
 
-int rot13(void) {
-  int ch;
-
-  while ((ch = getchar()) != EOF) {
-    if (isalpha(ch)) {
-      if (toupper(ch) >= 'A' && toupper(ch) <= 'M') {
-        ch += 13;
-      } else {
-        ch -= 13;
-      }
-    }
-    putchar(ch);
-  }
-  putchar('\n');
-
-  return 0;
+void rot13(void) {
+  shift_text(13, 1);
 }
