@@ -18,7 +18,7 @@ The project includes a Makefile for easy compilation and running. The main comma
 - **`make clean`**: Cleans up all build artifacts, removing the `/build` directory.
 
 ## Usage
-To use the program, you first need to compile it using the Makefile provided. Once compiled, you can run it with the following command:
+To use the program, you first need to compile it using the Makefile provided (`make build`). Once compiled, you can run it with the following command:
 ```
 ./cesarean-cypher <-rot| offset{a-z|A-Z}> [modifier{-d}]
 ```
@@ -36,7 +36,7 @@ This will output the original message: **"Hello, World!"**.
 
 ## Implementation Details
 - The program is written in C and makes use of the `ctype.h` library to check and convert character case.
-- It applies the Rot13 cipher logic to alphabetic characters while leaving non-alphabetic characters unchanged.
+- It applies an offset logic to shift alphabetic characters while leaving non-alphabetic characters unchanged.
 - The Makefile defines several targets for building and cleaning the project. It separates object files and binaries into distinct directories for organization.
 
 ## File Structure
