@@ -52,3 +52,4 @@ void shift_text(char offset, int modifier, int default_shift) {
   }
   putchar('\n');
 }
+

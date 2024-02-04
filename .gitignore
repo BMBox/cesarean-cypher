@@ -77,6 +77,9 @@ bin/*
 !default.xcworkspace
 xcuserdata
 
+# VSCODE
+.vscode
+
 # MacOS
 .DS_Store
 
