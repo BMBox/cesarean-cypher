@@ -9,7 +9,7 @@ void print_usage(char *program_name);
 
 void shift_text(char offset, int modifier, int default_shift);
 
-int main(int argc, char **argv) {
+int main(const int argc, char **argv) {
   if (argc < 2) {
     print_usage(argv[0]);
     return 1;
@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   if (strcmp(argv[1], "-rot") == 0) {
     shift_text(0, 0, ROT13_SHIFT);
   } else if (isalpha(*argv[1])) {
-    int modifier = argc > 2 && strcmp(argv[2], "-d") == 0;
+    const int modifier = argc > 2 && strcmp(argv[2], "-d") == 0;
     shift_text(*argv[1], modifier, 0);
   } else {
     print_usage(argv[0]);
